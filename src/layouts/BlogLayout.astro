@@ -1,0 +1,25 @@
+---
+import PostHeader from "../components/PostHeader.astro";
+import MainLayout from "./MainLayout.astro";
+
+const { frontmatter } = Astro.props;
+const { title, date, category, image, author } = frontmatter;
+---
+
+<MainLayout {title}>
+  <PostHeader {title} {date} {category} {image} {author} />
+  <div class="post-content">
+    <div class="container content">
+      <slot />
+    </div>
+  </div>
+</MainLayout>
+
+<style lang="scss">
+  .post-content{
+    .content{
+      max-width: 708px;
+      width: 100%;
+    }
+  }
+</style>

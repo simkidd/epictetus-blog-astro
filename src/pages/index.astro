@@ -1,0 +1,105 @@
+---
+import { Image } from "astro:assets";
+
+// layout
+import MainLayout from "../layouts/MainLayout.astro";
+
+// images
+import Image1 from "../assets/images/image-1.jpg";
+
+// components
+import PostCard from "../components/PostCard.astro";
+---
+
+<MainLayout title="Epictetus Blog">
+  <section class="hero container">
+    <div class="img-wrap">
+      <Image src={Image1} alt="image1" />
+    </div>
+    <div class="content">
+      <p class="small-text">
+        <span>UI design</span>
+        <span>July 2, 2021</span>
+      </p>
+      <a href="">
+        <h2>
+          Understanding color theory: the color wheel and finding complementary
+          colors
+        </h2>
+      </a>
+      <p>
+        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+        cillum dolor. Voluptate exercitation incididunt aliquip deserunt
+        reprehenderit elit laborum.
+      </p>
+    </div>
+  </section>
+  <section class="blog-list">
+    <div class="card-grid container">
+      <!-- <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard /> -->
+    </div>
+  </section>
+</MainLayout>
+
+<style lang="scss">
+  .hero {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 31px;
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .img-wrap {
+      width: 710px;
+      height: 389px;
+      border-radius: 10px;
+      overflow: hidden;
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 176px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .content {
+      .small-text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: normal;
+        opacity: 0.6;
+      }
+      h2 {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 38px;
+        color: #fff;
+      }
+      p {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 28px;
+      }
+    }
+  }
+  .blog-list {
+    margin-top: 60px;
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+			@media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    }
+  }
+</style>

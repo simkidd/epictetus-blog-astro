@@ -1,0 +1,118 @@
+---
+import SearchIcon from "./SearchIcon.astro";
+
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1);
+
+const navlinks = [
+  { name: "About", href: "/about" },
+  { name: "Blog", href: "/blog" },
+  // { name: "", href: "" },
+  // { name: "", href: "" },
+];
+---
+
+<div class="navbar">
+  <div class="navbar-inner container">
+    <a href="/" class="logo">
+      <span>E</span>
+      Epictetus
+    </a>
+
+    <ul class="nav">
+      {
+        navlinks.map((nav) => {
+          const active =
+            currentPath === nav.href.slice(1) ||
+            currentPath.startsWith(nav.href.slice(1) + "/");
+          return (
+            <li>
+              <a href={nav.href} class={`nav-link  ${active && "active"}`}>
+                {nav.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <div class="search">
+      <SearchIcon width={18} height={18} />
+      <input type="text" placeholder="Search..." />
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .navbar {
+    width: 100%;
+
+    .navbar-inner {
+      padding-block: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @media screen and (max-width: 768px) {
+        padding-block: 2rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-size: 18px;
+        &:hover {
+          color: #fff;
+        }
+        span {
+          width: 35px;
+          height: 35px;
+          border-radius: 3px;
+          background: #4b5563;
+          box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 45px;
+        .nav-link {
+          font-size: 18px;
+          padding-block: 0.3rem;
+          border-bottom: 2px solid transparent;
+          &.active {
+            color: #758eb1;
+            border-bottom: 2px solid #758eb1;
+          }
+        }
+      }
+
+      .search {
+        border-radius: 100px;
+        background: rgba(31, 41, 55, 0.6);
+        width: 224px;
+        height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        padding-inline: 1rem;
+        gap: 0.8rem;
+
+        input {
+          width: 100%;
+          background: transparent;
+          outline: 0;
+          color: #fff;
+          border: 0;
+        }
+      }
+    }
+  }
+</style>

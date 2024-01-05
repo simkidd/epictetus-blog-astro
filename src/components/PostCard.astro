@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { formatDate, slugify } from "../utils/index.ts";
+import { formatDate, slugify } from "../utils/helpers.ts";
 
 const { post } = Astro.props;
 const { title, date, category, author, image, description } = post.frontmatter;

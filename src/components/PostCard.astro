@@ -1,19 +1,29 @@
 ---
 import { Image } from "astro:assets";
+import { formatDate, slugify } from "../utils/index.ts";
 
-const {post} = Astro.props;
+const { post } = Astro.props;
+const { title, date, category, author, image, description } = post.frontmatter;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/images/*.{jpeg,jpg,png,gif}"
+);
+if (!images[image.src])
+  throw new Error(
+    `"${image.src}" does not exist in glob: "../assets/images/*.{jpeg,jpg,png,gif}"`
+  );
 ---
 
 <article class="post-card">
   <div class="img-wrap">
-    <!-- <Image src={image.src} alt={image.alt} /> -->
+    <Image src={images[image.src]()} alt={image.alt} />
   </div>
   <div class="content">
     <p class="small-text">
       <span>{category}</span>
-      <span>{date}</span>
+      &bull;
+      <span>{formatDate(date)}</span>
     </p>
-    <a href={url}>
+    <a href={post.url}>
       <h2>
         {title}
       </h2>
@@ -23,7 +33,7 @@ const {post} = Astro.props;
     </p>
     <div class="author">
       <div class="author-img">
-        <Image src={author.image.src} alt={author.image.alt} />
+        <Image src={images[author.image.src]()} alt={author.image.alt} />
       </div>
       <p class="author-name">{author.name}</p>
     </div>
@@ -66,6 +76,7 @@ const {post} = Astro.props;
         font-size: 16px;
         font-weight: 400;
         line-height: 28px;
+        margin-bottom: 20px;
       }
       .author {
         display: flex;

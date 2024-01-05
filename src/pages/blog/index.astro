@@ -6,25 +6,31 @@ const allPosts = await Astro.glob("./*.md");
 ---
 
 <MainLayout title="Posts">
-  <section class="container">
+  <section class="posts container">
     <h2>Blog Posts</h2>
     <div class="post-grid">
-      <!-- {
-        allPosts.map((post)=>(
-          <PostCard {post} />
-        ))
-      } -->
-      <ul>
-        <li>
-          <a href="/blog/post-1">Post 1</a>
-        </li>
-        <li>
-          <a href="/blog/post-2">Post 2</a>
-        </li>
-        <li>
-          <a href="/blog/post-3">Post 3</a>
-        </li>
-      </ul>
+      {allPosts.map((post) => <PostCard {post} />)}
     </div>
   </section>
 </MainLayout>
+
+<style lang="scss">
+  .posts {
+    h2 {
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 28px;
+      text-align: center;
+      margin-bottom: 100px;
+    }
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+  }
+</style>

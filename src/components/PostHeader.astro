@@ -40,7 +40,7 @@ if (!images[image.src])
       <div class="author-img">
         <Image src={images[author.image.src]()} alt={author.image.alt} />
       </div>
-      <p class="author-name">{author.name}</p>
+      <a href={`/author/${slugify(author.name)}`} class="author-name">{author.name}</a>
     </div>
     <div class="post-img">
       <Image src={images[image.src]()} alt={image.alt} />

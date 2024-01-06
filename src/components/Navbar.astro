@@ -66,7 +66,7 @@ const navlinks: Menu[] = [
     position: sticky;
     top: 0;
     z-index: 10;
-    &.scrolled{
+    &.scrolled {
       background: #374151;
     }
 
@@ -75,8 +75,11 @@ const navlinks: Menu[] = [
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+      transition: padding-block 0.3s ease-in-out;
       @media screen and (max-width: 768px) {
         padding-block: 1.5rem;
+        flex-wrap: wrap;
       }
 
       #menuBtn {
@@ -133,7 +136,10 @@ const navlinks: Menu[] = [
           &.show {
             left: 0;
           }
-          .close-btn {
+        }
+        .close-btn {
+          display: none;
+          @media screen and (max-width: 768px) {
             position: absolute;
             top: 1.5rem;
             right: 16px;
@@ -183,7 +189,10 @@ const navlinks: Menu[] = [
           display: none;
           &.show-search {
             display: flex;
+            background: rgba(31, 41, 55, 0.6);
             width: 100%;
+            margin-top: 1rem;
+            box-sizing: border-box;
           }
         }
 
@@ -200,12 +209,15 @@ const navlinks: Menu[] = [
 </style>
 
 <script>
-  const menuBtn = document.getElementById("menuBtn");
-  const navLinks = document.getElementById("navLinks");
-  const closeBtn = document.querySelector(".close-btn");
-  const searchBtn = document.getElementById("searchBtn");
-  const searchInput = document.querySelector(".search");
-  const navbar = document.querySelector(".navbar");
+  const menuBtn = document.getElementById("menuBtn") as HTMLElement | null;
+  const navLinks = document.getElementById("navLinks") as HTMLElement | null;
+  const closeBtn = document.querySelector(".close-btn") as HTMLElement | null;
+  const searchBtn = document.getElementById("searchBtn") as HTMLElement | null;
+  const searchInput = document.querySelector(".search") as HTMLElement | null;
+  const navbar = document.querySelector(".navbar") as HTMLElement | null;
+  const navbarInner = document.querySelector(
+    ".navbar-inner"
+  ) as HTMLElement | null;
 
   menuBtn?.addEventListener("click", () => {
     navLinks?.classList.add("show");
@@ -214,17 +226,20 @@ const navlinks: Menu[] = [
     navLinks?.classList.remove("show");
   });
 
+  // show search input on mobile
   searchBtn?.addEventListener("click", () => {
     searchInput?.classList.toggle("show-search");
   });
 
-  // Add navbar background color on scroll
-  if (navbar) {
+  // Add navbar background color on scroll, and adjust the padding
+  if (navbar && navbarInner) {
     document.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
         navbar.classList.add("scrolled");
+        navbarInner.style.paddingBlock = "24px";
       } else {
         navbar.classList.remove("scrolled");
+        navbarInner.style.paddingBlock = "71px";
       }
     });
   }

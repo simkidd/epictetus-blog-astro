@@ -14,6 +14,7 @@ image: {
   alt: ""
 }
 description: CSS is a great way to style your website. In fact, there are no alternatives! Learn how to use it here.
+draft: false
 category: Inspirations
 ---
 

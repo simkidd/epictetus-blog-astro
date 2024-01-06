@@ -2,22 +2,24 @@
 import { Image } from "astro:assets";
 import { formatDate, slugify } from "../utils/helpers.ts";
 
-const { post } = Astro.props;
-const { title, date, category, author, image, description } = post.frontmatter;
+const { frontmatter, url } = Astro.props;
+const { title, date, category, author, image, description } = frontmatter;
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/images/*.{jpeg,jpg,png,gif}"
 );
-if (!images[image.src])
+if (!images[image.src]) {
   throw new Error(
     `"${image.src}" does not exist in glob: "../assets/images/*.{jpeg,jpg,png,gif}"`
   );
+}
 
-  console.log(post.url)
+const authorImage = images[author.image.src]();
+const postImage = images[image.src]();
 ---
 
 <article class="post-card">
   <div class="img-wrap">
-    <Image src={images[image.src]()} alt={image.alt} />
+    <Image src={postImage} alt={image.alt} />
   </div>
   <div class="content">
     <p class="small-text">
@@ -25,7 +27,7 @@ if (!images[image.src])
       &bull;
       <span>{formatDate(date)}</span>
     </p>
-    <a href={post.url}>
+    <a href={url}>
       <h2>
         {title}
       </h2>
@@ -35,7 +37,7 @@ if (!images[image.src])
     </p>
     <div class="author">
       <div class="author-img">
-        <Image src={images[author.image.src]()} alt={author.image.alt} />
+        <Image src={authorImage} alt={author.image.alt} />
       </div>
       <p class="author-name">{author.name}</p>
     </div>

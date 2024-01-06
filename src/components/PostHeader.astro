@@ -15,10 +15,14 @@ const { title, date, category, image, author } = Astro.props;
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/images/*.{jpeg,jpg,png,gif}"
 );
-if (!images[image.src])
+if (!images[image.src]) {
   throw new Error(
     `"${image.src}" does not exist in glob: "../assets/images/*.{jpeg,jpg,png,gif}"`
   );
+}
+
+const authorImage = images[author.image.src]();
+const postImage = images[image.src]();
 // const posts = await Astro.glob("../pages/blog/*.md");
 ---
 
@@ -38,12 +42,14 @@ if (!images[image.src])
     </h2>
     <div class="author">
       <div class="author-img">
-        <Image src={images[author.image.src]()} alt={author.image.alt} />
+        <Image src={authorImage} alt={author.image.alt} />
       </div>
-      <a href={`/author/${slugify(author.name)}`} class="author-name">{author.name}</a>
+      <a href={`/author/${slugify(author.name)}`} class="author-name"
+        >{author.name}</a
+      >
     </div>
     <div class="post-img">
-      <Image src={images[image.src]()} alt={image.alt} />
+      <Image src={postImage} alt={image.alt} />
     </div>
   </div>
 </div>

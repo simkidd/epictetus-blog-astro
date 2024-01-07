@@ -1,18 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: The More Important the Work, the More Important the Rest
 date: 2024-01-02
-author: {
-  name: Esther Howard,
-  image: {
-    src: "../assets/images/Esther Howard.png",
-    alt: ""
-  }
-}
-image: {
-  src: "../assets/images/image-3.jpg",
-  alt: ""
-}
+author: esther-howard
+image: "../../assets/images/image-3.jpg"
 description: Sometimes you just run out of ideas for sample blog posts. It’s no one’s fault, it’s just the way it is.
 draft: false
 category: Internet fix

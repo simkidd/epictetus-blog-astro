@@ -1,13 +1,19 @@
 ---
+import { getEntry, type CollectionEntry } from "astro:content";
 import PostHeader from "../components/PostHeader.astro";
 import MainLayout from "./MainLayout.astro";
 
-const { frontmatter } = Astro.props;
-const { title, date, category, image, author } = frontmatter;
+interface Props {
+  entry: CollectionEntry<"posts">;
+}
+
+const { entry } = Astro.props;
+const { title } = entry.data;
+
 ---
 
 <MainLayout {title}>
-  <PostHeader {title} {date} {category} {image} {author} />
+  <PostHeader entry={entry} />
   <div class="post-content">
     <div class="container content">
       <slot />

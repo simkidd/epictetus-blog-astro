@@ -1,26 +1,16 @@
 ---
-layout: ../../layouts/BlogLayout.astro
-title: Email Love - Email Inspiration, Templates and Discovery
+title: The More Important the Work, the More Important the Rest
 date: 2024-01-02
-author: {
-  name: Robert Fox,
-  image: {
-    src: "../assets/images/Robert Fox.png",
-    alt: ""
-  }
-}
-image: {
-  src: "../assets/images/image-6.jpg",
-  alt: ""
-}
-description: CSS is a great way to style your website. In fact, there are no alternatives! Learn how to use it here.
+author: esther-howard
+image: "../../assets/images/image-5.jpg"
+description: Sometimes you just run out of ideas for sample blog posts. It’s no one’s fault, it’s just the way it is.
 draft: false
-category: Inspirations
+category: 5 To 9
 ---
 
 Nisi duis ex aliqua eu officia eiusmod duis magna pariatur. Irure laborum qui aliqua nulla esse cillum laborum aliquip nulla elit. Id id Lorem duis irure cillum culpa. Nulla sint et aliqua velit do. Nulla sit sit proident consectetur enim ullamco aliqua in reprehenderit ullamco officia.<br></br>
 
-## Well, then. Let’s talk.
+## Well, then. Let’s talk
 
 Ad ipsum velit sint enim exercitation mollit consequat elit mollit qui commodo aute. Laboris culpa voluptate aliquip incididunt duis. Cupidatat aliquip et sunt aute fugiat cupidatat irure voluptate. Occaecat officia et sunt.<br></br>
 

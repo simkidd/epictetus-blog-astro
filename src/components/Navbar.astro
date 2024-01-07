@@ -67,9 +67,27 @@ const navlinks: Menu[] = [
     top: 0;
     z-index: 10;
     &.scrolled {
-      background: rgba(55, 65, 81, 0.8);
-      backdrop-filter: blur(8px);
+      // background: rgba(55, 65, 81, 0.8);
+      background: rgba(33, 41, 57, 0.8);
+      backdrop-filter: blur(10px);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      // border-bottom: 1px solid #f9fafb18;
+
+      .navbar-inner {
+        .search {
+          transition: all 0.3s ease-in-out;
+          background: rgba(255, 255, 255, 0.103);
+          @media screen and (max-width: 768px) {
+            background: rgba(255, 255, 255, 0.1) !important;
+          }
+          input {
+            &::placeholder {
+              color: #ffffff62;
+            }
+          }
+        }
+      }
     }
 
     .navbar-inner {
@@ -238,7 +256,7 @@ const navlinks: Menu[] = [
     document.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
         navbar.classList.add("scrolled");
-        navbarInner.style.paddingBlock = "24px";
+        navbarInner.style.paddingBlock = "16px";
       } else {
         navbar.classList.remove("scrolled");
         navbarInner.style.paddingBlock = "71px";

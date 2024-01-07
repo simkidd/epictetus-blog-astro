@@ -1,18 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: How to design a product that can grow itself 10x in year
 date: 2024-01-02
-author: {
-  name: Jenny Wilson,
-  image: {
-    src: "../assets/images/Jenny Wilson.png",
-    alt: ""
-  } 
-}
-image: {
-  src: "../assets/images/image-2.jpg",
-  alt: ""
-}
+author: jenny-wilson
+image: "../../assets/images/image-2.jpg"
 description: Have you ever wondered what the most important items of life are? Well, wonder no more!
 draft: false
 category: Internet

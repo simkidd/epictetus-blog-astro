@@ -1,29 +1,18 @@
 ---
 import { Image } from "astro:assets";
+import { getEntry, type CollectionEntry } from "astro:content";
 
 // utils imports
 import { formatDate, slugify } from "../utils/helpers.ts";
-// interface Props {
-//   frontmatter: {
-//     title: string;
-//     date: string;
-//     category: string;
-//   };
-// }
 
-const { title, date, category, image, author } = Astro.props;
-const images = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/images/*.{jpeg,jpg,png,gif}"
-);
-if (!images[image.src]) {
-  throw new Error(
-    `"${image.src}" does not exist in glob: "../assets/images/*.{jpeg,jpg,png,gif}"`
-  );
+interface Props {
+  entry: CollectionEntry<"posts">;
 }
 
-const authorImage = images[author.image.src]();
-const postImage = images[image.src]();
-// const posts = await Astro.glob("../pages/blog/*.md");
+const { entry } = Astro.props;
+const { title, image, category, date } = entry.data;
+
+const { data: author } = await getEntry("authors", entry.data.author.id);
 ---
 
 <div class="post-header">
@@ -42,14 +31,14 @@ const postImage = images[image.src]();
     </h2>
     <div class="author">
       <div class="author-img">
-        <Image src={authorImage} alt={author.image.alt} />
+        <Image src={author.image} alt={author.name} />
       </div>
-      <a href={`/author/${slugify(author.name)}`} class="author-name"
-        >{author.name}</a
-      >
+      <a href={`/author/${slugify(author.name)}`} class="author-name">
+        {author.name}
+      </a>
     </div>
     <div class="post-img">
-      <Image src={postImage} alt={image.alt} />
+      <Image src={image} alt={title} />
     </div>
   </div>
 </div>

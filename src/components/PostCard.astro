@@ -1,25 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import { formatDate, slugify } from "../utils/helpers.ts";
+import { formatDate } from "../utils/helpers.ts";
+import { getEntry, type CollectionEntry } from "astro:content";
 
-const { frontmatter, url } = Astro.props;
-const { title, date, category, author, image, description } = frontmatter;
-const images = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/images/*.{jpeg,jpg,png,gif}"
-);
-if (!images[image.src]) {
-  throw new Error(
-    `"${image.src}" does not exist in glob: "../assets/images/*.{jpeg,jpg,png,gif}"`
-  );
+interface Props {
+  post: CollectionEntry<"posts">;
 }
 
-const authorImage = images[author.image.src]();
-const postImage = images[image.src]();
+const { post } = Astro.props;
+const { title, date, category, author, image, description } = post.data;
+
+const { data: authorData } = await getEntry("authors", author.id);
 ---
 
 <article class="post-card">
   <div class="img-wrap">
-    <Image src={postImage} alt={image.alt} />
+    <Image src={image} alt={title} />
   </div>
   <div class="content">
     <p class="small-text">
@@ -27,7 +23,7 @@ const postImage = images[image.src]();
       &bull;
       <span>{formatDate(date)}</span>
     </p>
-    <a href={url}>
+    <a href={`/blog/${post.slug}`}>
       <h2>
         {title}
       </h2>
@@ -37,9 +33,9 @@ const postImage = images[image.src]();
     </p>
     <div class="author">
       <div class="author-img">
-        <Image src={authorImage} alt={author.image.alt} />
+        <Image src={authorData.image} alt={authorData.name} />
       </div>
-      <p class="author-name">{author.name}</p>
+      <p class="author-name">{authorData.name}</p>
     </div>
   </div>
 </article>
@@ -96,6 +92,9 @@ const postImage = images[image.src]();
             height: 100%;
             object-fit: cover;
           }
+        }
+        .author-name {
+          margin: 0;
         }
       }
     }

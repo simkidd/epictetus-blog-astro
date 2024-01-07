@@ -9,6 +9,10 @@ import Image1 from "../assets/images/image-1.jpg";
 
 // components
 import PostCard from "../components/PostCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+
 ---
 
 <MainLayout title="Epictetus Blog">
@@ -36,10 +40,11 @@ import PostCard from "../components/PostCard.astro";
   </section>
   <section class="blog-list">
     <div class="card-grid container">
-      <!-- <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard /> -->
+      {
+        posts && posts.length > 0
+          ? posts.map((post) => <PostCard post={post} />)
+          : "No posts found"
+      }
     </div>
   </section>
 </MainLayout>
@@ -96,10 +101,10 @@ import PostCard from "../components/PostCard.astro";
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
-			@media screen and (max-width: 768px) {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
+      @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
     }
   }
 </style>

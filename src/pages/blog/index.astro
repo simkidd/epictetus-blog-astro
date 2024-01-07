@@ -1,16 +1,38 @@
 ---
+import { getCollection } from "astro:content";
+
+// component imports
 import PostCard from "../../components/PostCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 
-const allPosts = await Astro.glob("./*.md");
+const posts = await getCollection("posts");
+
 ---
 
 <MainLayout title="Posts">
   <section class="posts container">
     <h2>Blog Posts</h2>
     <div class="post-grid">
-      {allPosts.map((post) => <PostCard {post} />)}
+      {
+        posts && posts.length > 0
+          ? posts.map((post) => <PostCard post={post} />)
+          : "No posts found"
+      }
     </div>
+    <!-- <div>
+      <p>Posts {page.start + 1} to {page.end + 1}</p>
+      <p>{page.size} posts per page</p>
+      <p>Page {page.currentPage} of {page.lastPage}</p>
+    </div>
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      length={page.total}
+      currentUrl={page.url.current}
+      currentPage={page.currentPage}
+      firstUrl={`${firstPath}`}
+      lastUrl={`${firstPath}/${page.lastPage}`}
+    /> -->
   </section>
 </MainLayout>
 

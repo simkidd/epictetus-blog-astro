@@ -1,18 +1,11 @@
 ---
 import { Image } from "astro:assets";
-
-// layout
 import MainLayout from "../layouts/MainLayout.astro";
-
-// images
 import Image1 from "../assets/images/image-1.jpg";
-
-// components
 import PostCard from "../components/PostCard.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
-
 ---
 
 <MainLayout title="Epictetus Blog">
@@ -42,9 +35,12 @@ const posts = await getCollection("posts");
     <div class="card-grid container">
       {
         posts && posts.length > 0
-          ? posts.map((post) => <PostCard post={post} />)
+          ? posts.map((post) => <PostCard post={post} />).slice(0, 3)
           : "No posts found"
       }
+    </div>
+    <div class="container show-more">
+      <a href="/blog">View More Posts</a>
     </div>
   </section>
 </MainLayout>
@@ -104,6 +100,24 @@ const posts = await getCollection("posts");
       @media screen and (max-width: 768px) {
         grid-template-columns: 1fr;
         gap: 20px;
+      }
+    }
+  }
+  .show-more{
+    margin-block: 4rem;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    a{
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      padding: 8px 12px;
+      &:hover {
+        background-color: #758eb1;
+        color: #fff;
+        border-color: #758eb1;
       }
     }
   }

@@ -7,22 +7,15 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import Pagination from "@components/Pagination.astro";
 
 const pathname = new URL(Astro.request.url).pathname;
-const pathParts = pathname.split("/").filter(Boolean); // Remove empty parts
-
-// Get the first part of the path
-const firstPath = pathParts[0] || "";
-
-interface Props {
-  page: CollectionEntry<"posts">;
-}
+const firstPath = pathname.split("/")[1]; // Remove empty parts
 
 export async function getStaticPaths({ paginate }) {
-  const pages = await getCollection("posts", ({ data }) => {
+  const blogPosts = await getCollection("posts", ({ data }) => {
     return data.draft !== true;
   });
 
-  return paginate(pages, {
-    pageSize: 1,
+  return paginate(blogPosts, {
+    pageSize: 2,
   });
 }
 
@@ -38,22 +31,14 @@ console.log(page);
     <div class="post-grid">
       {posts.map((post) => <PostCard post={post} />)}
     </div>
-    <div>
-      <p>Posts {page.start + 1} to {page.end + 1}</p>
-      <p>{page.size} posts per page</p>
-      <p>Page {page.currentPage} of {page.lastPage}</p>
-      <p><a href={page.url.next}>Next Page</a></p>
-      <p><a href={page.url.prev}>Previous Page</a></p>
-    </div>
-    <!-- <Pagination
+
+    <Pagination
       prevUrl={page.url.prev}
       nextUrl={page.url.next}
-      length={page.total}
-      currentUrl={page.url.current}
+      length={page.lastPage}
       currentPage={page.currentPage}
-      firstUrl={`${firstPath}`}
-      lastUrl={`${firstPath}/${page.lastPage}`}
-    /> -->
+      firstUrl={`/${firstPath}`}
+    />
   </section>
 </MainLayout>
 

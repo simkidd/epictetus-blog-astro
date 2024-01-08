@@ -1,5 +1,5 @@
 ---
-import { getEntry, type CollectionEntry } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import PostHeader from "../components/PostHeader.astro";
 import MainLayout from "./MainLayout.astro";
 
@@ -9,7 +9,6 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title } = entry.data;
-
 ---
 
 <MainLayout {title}>

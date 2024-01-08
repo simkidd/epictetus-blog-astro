@@ -15,21 +15,19 @@ export async function getStaticPaths() {
       post.data.category.includes(category)
     );
     return {
-      params: { category: slugify(category)},
-      props: { posts: filteredPosts },
+      params: { category: slugify(category) },
+      props: { posts: filteredPosts, name: category },
     };
   });
 }
 
-const { category } = Astro.params;
-const { posts } = Astro.props;
-
-console.log("category page:", category);
+// const { category } = Astro.params;
+const { posts, name } = Astro.props;
 ---
 
-<MainLayout title={category}>
-  <section class="posts container" aria-label={`Posts about ${category}`}>
-    <h2>Category: <span>{category}</span></h2>
+<MainLayout title={name}>
+  <section class="posts container" aria-label={`Posts about ${name}`}>
+    <h2>Category: <span>{name}</span></h2>
     <div class="post-grid">
       {posts.map((post) => <PostCard post={post} />)}
     </div>

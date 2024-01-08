@@ -1,30 +1,51 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 // component imports
 import PostCard from "../../components/PostCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
+import Pagination from "@components/Pagination.astro";
 
-const posts = await getCollection("posts");
+const pathname = new URL(Astro.request.url).pathname;
+const pathParts = pathname.split("/").filter(Boolean); // Remove empty parts
 
+// Get the first part of the path
+const firstPath = pathParts[0] || "";
+
+interface Props {
+  page: CollectionEntry<"posts">;
+}
+
+export async function getStaticPaths({ paginate }) {
+  const pages = await getCollection("posts", ({ data }) => {
+    return data.draft !== true;
+  });
+
+  return paginate(pages, {
+    pageSize: 1,
+  });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+
+console.log(page);
 ---
 
 <MainLayout title="Posts">
   <section class="posts container">
     <h2>Blog Posts</h2>
     <div class="post-grid">
-      {
-        posts && posts.length > 0
-          ? posts.map((post) => <PostCard post={post} />)
-          : "No posts found"
-      }
+      {posts.map((post) => <PostCard post={post} />)}
     </div>
-    <!-- <div>
+    <div>
       <p>Posts {page.start + 1} to {page.end + 1}</p>
       <p>{page.size} posts per page</p>
       <p>Page {page.currentPage} of {page.lastPage}</p>
+      <p><a href={page.url.next}>Next Page</a></p>
+      <p><a href={page.url.prev}>Previous Page</a></p>
     </div>
-    <Pagination
+    <!-- <Pagination
       prevUrl={page.url.prev}
       nextUrl={page.url.next}
       length={page.total}

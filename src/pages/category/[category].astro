@@ -1,48 +1,37 @@
 ---
-import type { GetStaticPaths } from "astro";
-import { slugify } from "../../utils/helpers";
 import PostCard from "@components/PostCard.astro";
 import MainLayout from "@layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "src/utils/helpers";
 
-export const getStaticPaths = (async () => {
-  const allPosts: any = await Astro.glob("../blog/*.md");
-
-  return [
-    {
-      params: { category: slugify("5 To 9") },
-      props: { posts: allPosts, name: "5 To 9" },
-    },
-    {
-      params: { category: slugify("Internet Fix") },
-      props: { posts: allPosts, name: "Internet Fix" },
-    },
-    {
-      params: { category: slugify("Internet") },
-      props: { posts: allPosts, name: "Internet" },
-    },
-    {
-      params: { category: slugify("Inspirations") },
-      props: { posts: allPosts, name: "Inspirations" },
-    },
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  const uniqueCategories = [
+    ...new Set(posts.map((p) => p.data.category).flat()),
   ];
-}) satisfies GetStaticPaths;
+
+  return uniqueCategories.map((category) => {
+    const filteredPosts = posts.filter((post) =>
+      post.data.category.includes(category)
+    );
+    return {
+      params: { category: slugify(category)},
+      props: { posts: filteredPosts },
+    };
+  });
+}
 
 const { category } = Astro.params;
-const { posts, name } = Astro.props;
-const filteredPosts = posts.filter((post: any) =>
-  slugify(post.frontmatter.category).includes(category)
-);
+const { posts } = Astro.props;
+
+console.log("category page:", category);
 ---
 
-<MainLayout title={name}>
-  <section class="posts container" aria-label={`Posts about ${name}`}>
-    <h2>Posts about "<span>{name}</span>"</h2>
+<MainLayout title={category}>
+  <section class="posts container" aria-label={`Posts about ${category}`}>
+    <h2>Category: <span>{category}</span></h2>
     <div class="post-grid">
-      {
-        filteredPosts.map((post: any) => (
-          <PostCard frontmatter={post.frontmatter} url={post.url} />
-        ))
-      }
+      {posts.map((post) => <PostCard post={post} />)}
     </div>
   </section>
 </MainLayout>

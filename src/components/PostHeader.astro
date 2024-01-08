@@ -13,6 +13,7 @@ const { entry } = Astro.props;
 const { title, image, category, date } = entry.data;
 
 const { data: author } = await getEntry("authors", entry.data.author.id);
+console.log("opened:", category)
 ---
 
 <div class="post-header">

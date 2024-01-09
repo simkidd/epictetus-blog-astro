@@ -8,8 +8,8 @@ import type { CollectionEntry } from "astro:content";
 interface Page {
   data: CollectionEntry<"posts">[];
   url: {
-    prev: string;
-    next: string;
+    prev: string | undefined;
+    next: string | undefined;
   };
   lastPage: number;
   currentPage: number;

@@ -1,17 +1,51 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-
-
 ---
 
 <MainLayout title={`Search result`}>
-  <section class="search container" >
-    
+  <section class="search container">
+    <h3 class="search-query">Search: Something is here</h3>
+
+    <div class="no-result">
+      <h1>No result</h1>
+      <p>
+        We couldn’t find any posts with the keyword `yahahahayuk`. Please try
+        another keyword.
+      </p>
+    </div>
   </section>
 </MainLayout>
 
 <style lang="scss">
   .search {
     min-height: calc(100vh - 198px);
+    .search-query {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 28px;
+      margin-top: 50px;
+      margin-bottom: 100px;
+    }
+    .no-result {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      h1 {
+        font-size: 64px;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 30px;
+        max-width: 525px;
+        width: 100%;
+        text-align: center;
+      }
+    }
   }
 </style>

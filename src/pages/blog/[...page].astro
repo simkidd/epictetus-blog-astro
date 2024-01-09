@@ -44,7 +44,7 @@ const posts = page.data;
     </div>
 
     {
-      posts.length > 0 && (
+      posts.length > 0 && page.lastPage > 1 && (
         <Pagination
           prevUrl={page.url.prev}
           nextUrl={page.url.next}

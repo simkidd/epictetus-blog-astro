@@ -15,7 +15,7 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
 <nav aria-label="Blog pages" class="pagination pagination-default">
   {
     prevUrl && (
-      <a href={prevUrl} class="pagination__link page__num">
+      <a href={prevUrl} class="pagination__link ">
         <Icon name="mdi:chevron-left" size={24} />
       </a>
     )
@@ -25,7 +25,7 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
     paginationList.map((num) => (
       <a
         href={`${firstUrl}${num == 1 ? "" : "/" + num}`}
-        class={`pagination__link ${
+        class={`pagination__link page__num ${
           currentPage == num ? "disabled active" : ""
         }`}
       >
@@ -48,15 +48,18 @@ const paginationList = Array.from({ length }, (_, i) => i + 1);
     display: flex;
     justify-content: center;
     margin-block: 4rem;
+    gap: 4px;
+
     &__link {
-      padding: 8px;
-      margin: 0 4px;
+      width: 40px;
+      height: 40px;
       color: #fff;
-      border: 1px solid #ccc;
+      border: 1px solid transparent;
       border-radius: 4px;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
+      justify-content: center;
 
       &.disabled {
         pointer-events: none;

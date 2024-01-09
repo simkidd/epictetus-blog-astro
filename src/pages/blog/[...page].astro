@@ -6,6 +6,16 @@ import PostCard from "../../components/PostCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import Pagination from "@components/Pagination.astro";
 
+interface Page {
+  data: CollectionEntry<"Posts">[];
+  url: {
+    prev: string | undefined;
+    next: string | undefined;
+  };
+  lastPage: number;
+  currentPage: number;
+}
+
 const pathname = new URL(Astro.request.url).pathname;
 const firstPath = pathname.split("/")[1]; // Remove empty parts
 
@@ -19,7 +29,7 @@ export async function getStaticPaths({ paginate }) {
   });
 }
 
-const { page } = Astro.props;
+const { page } = Astro.props as {page: Page};
 const posts = page.data;
 
 console.log(page);

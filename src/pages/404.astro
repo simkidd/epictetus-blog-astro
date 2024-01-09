@@ -1,6 +1,6 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
-// import { Icon } from "astro-icon/components";
+import { Icon } from "astro-icon/components";
 
 const title = "404: Not Found";
 ---
@@ -9,7 +9,7 @@ const title = "404: Not Found";
   <section class="not-found container" aria-label="Page Not Found">
     <h2>Oops... Page not found.</h2>
     <a href="/">
-      <!-- <Icon name="mdi:home" /> -->
+      <Icon name="mdi:home" size={18} />
       Let's go home
     </a>
   </section>
@@ -33,6 +33,9 @@ const title = "404: Not Found";
       border-radius: 4px;
       transition: background-color 0.3s;
       padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
       &:hover {
         background-color: #758eb1;
         color: #fff;

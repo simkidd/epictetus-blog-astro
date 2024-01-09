@@ -1,10 +1,19 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-
-// component imports
+import { getCollection } from "astro:content";
+import Pagination from "@components/Pagination.astro";
 import PostCard from "../../components/PostCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
-import Pagination from "@components/Pagination.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Page {
+  data: CollectionEntry<"posts">[];
+  url: {
+    prev: string;
+    next: string;
+  };
+  lastPage: number;
+  currentPage: number;
+}
 
 const pathname = new URL(Astro.request.url).pathname;
 const firstPath = pathname.split("/")[1]; // Remove empty parts
@@ -15,35 +24,42 @@ export async function getStaticPaths({ paginate }) {
   });
 
   return paginate(blogPosts, {
-    pageSize: 2,
+    pageSize: 3,
   });
 }
 
-const { page } = Astro.props;
+const { page } = Astro.props as { page: Page };
 const posts = page.data;
-
-console.log(page);
 ---
 
 <MainLayout title="Posts">
   <section class="posts container">
     <h2>Blog Posts</h2>
     <div class="post-grid">
-      {posts.map((post) => <PostCard post={post} />)}
+      {
+        posts && posts.length > 0
+          ? posts.map((post) => <PostCard post={post} />)
+          : "No posts found"
+      }
     </div>
 
-    <Pagination
-      prevUrl={page.url.prev}
-      nextUrl={page.url.next}
-      length={page.lastPage}
-      currentPage={page.currentPage}
-      firstUrl={`/${firstPath}`}
-    />
+    {
+      posts.length > 0 && (
+        <Pagination
+          prevUrl={page.url.prev}
+          nextUrl={page.url.next}
+          length={page.lastPage}
+          currentPage={page.currentPage}
+          firstUrl={`/${firstPath}`}
+        />
+      )
+    }
   </section>
 </MainLayout>
 
 <style lang="scss">
   .posts {
+    min-height: calc(100vh - 360px);
     h2 {
       font-size: 34px;
       font-weight: 400;
